@@ -35,9 +35,11 @@ function render() {
 
 	// Function to calculate totals.
 	// Total is the sum of signed amounts: incomes positive, expenses negative.
-	const total = transactions.reduce((s, t) => s + t.amount, 0);
-	const income = transactions.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0);
+	// Also includes the manually set monthly income.
+	const transactionIncome = transactions.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0);
+	const income = monthlyIncome + transactionIncome;
 	const expenses = transactions.filter(t => t.amount < 0).reduce((s, t) => s + t.amount, 0);
+	const total = income + expenses;
 
 	totalBalanceEl.textContent = formatCurrency(total);
 	totalIncomeEl.textContent = formatCurrency(income);
