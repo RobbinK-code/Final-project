@@ -41,7 +41,15 @@ function render() {
 		const left = document.createElement('div');
 		left.className = 'tx-left';
 		const desc = document.createElement('div');
-		desc.innerHTML = `<div class="tx-desc">${escapeHtml(tx.description)}</div><div class="tx-meta">${tx.category}</div>`;
+		// Create a category badge and metadata element
+		const badge = document.createElement('span');
+		badge.className = 'category-badge';
+		badge.style.backgroundColor = categoryColor(tx.category);
+		const meta = `<div class="tx-meta"><span class="cat">${escapeHtml(tx.category)}</span></div>`;
+		desc.innerHTML = `<div class="tx-desc">${escapeHtml(tx.description)}</div>${meta}`;
+		// Insert badge before the category text
+		const metaEl = desc.querySelector('.tx-meta');
+		if (metaEl) metaEl.prepend(badge);
 		left.appendChild(desc);
 
 		const amount = document.createElement('div');
@@ -60,6 +68,19 @@ function render() {
 		li.appendChild(actions);
 		transactionsList.appendChild(li);
 	});
+}
+
+// Map categories to palette colors. If a category is unknown, return a neutral color.
+function categoryColor(category) {
+	const map = {
+		'Housing': getComputedStyle(document.documentElement).getPropertyValue('--accent-1').trim() || '#ffb74d',
+		'Food': getComputedStyle(document.documentElement).getPropertyValue('--accent-2').trim() || '#ff8a80',
+		'Transportation': getComputedStyle(document.documentElement).getPropertyValue('--accent-3').trim() || '#80cbc4',
+		'Entertainment': getComputedStyle(document.documentElement).getPropertyValue('--accent-4').trim() || '#9575cd',
+		'Utilities': getComputedStyle(document.documentElement).getPropertyValue('--accent-5').trim() || '#64b5f6',
+		'Other': getComputedStyle(document.documentElement).getPropertyValue('--accent-6').trim() || '#bdbdbd'
+	};
+	return map[category] || '#bdbdbd';
 }
 
 // Validate input fields before adding a transaction

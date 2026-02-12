@@ -1,34 +1,51 @@
+:root{
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --primary: #4a76ff;
+  --primary-600: #3a5fe0;
+  --income: #1e8e3e;
+  --expense: #c62828;
+  --accent-1: #ffb74d; /* housing */
+  --accent-2: #ff8a80; /* food */
+  --accent-3: #80cbc4; /* transport */
+  --accent-4: #9575cd; /* entertainment */
+  --accent-5: #64b5f6; /* utilities */
+  --accent-6: #bdbdbd; /* other */
+}
+
 /* Basic reset and layout */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Arial, Helvetica, sans-serif; background: #f6f8fc; color: #222; padding: 24px; }
-.container { max-width: 900px; margin: 0 auto; }
+body { font-family: Inter, Arial, Helvetica, sans-serif; background: var(--bg); color: #111827; padding: 28px; }
+.container { max-width: 960px; margin: 0 auto; }
 header { margin-bottom: 18px; }
-.tagline { color: #555; margin-top: 6px; }
+.tagline { color: var(--muted); margin-top: 6px; }
 
 .dashboard { display: flex; gap: 12px; margin-bottom: 20px; }
-.card { background: white; padding: 12px 16px; border-radius: 8px; box-shadow: 0 2px 6px rgba(20,20,40,0.05); flex: 1; }
-.card h3 { font-size: 14px; color: #666; margin-bottom: 8px; }
+.card { background: var(--card); padding: 14px 18px; border-radius: 10px; box-shadow: 0 6px 18px rgba(15,23,42,0.04); flex: 1; }
+.card h3 { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
 .card p { font-size: 20px; font-weight: 700; }
 
-.form-section { background: white; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; }
-#transaction-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-#transaction-form input, #transaction-form select { padding: 8px; border-radius: 6px; border: 1px solid #ddd; min-width: 140px; }
-#transaction-form button { padding: 10px 14px; border: none; background: #4a76ff; color: white; border-radius: 6px; cursor: pointer; }
-#transaction-form button:hover { background: #3a5fe0; }
+.form-section { background: var(--card); padding: 14px 18px; border-radius: 10px; margin-bottom: 20px; }
+#transaction-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+#transaction-form input, #transaction-form select { padding: 10px; border-radius: 8px; border: 1px solid #e6e9ef; min-width: 150px; }
+#transaction-form button { padding: 10px 14px; border: none; background: var(--primary); color: white; border-radius: 8px; cursor: pointer; }
+#transaction-form button:hover { background: var(--primary-600); }
 
 .error { color: #b00020; margin-top: 8px; }
 
-.transactions { background: white; padding: 12px 16px; border-radius: 8px; }
+.transactions { background: var(--card); padding: 14px 18px; border-radius: 10px; }
 .transactions h2 { margin-bottom: 10px; }
 #transactions-list { list-style: none; }
-#transactions-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; border-bottom: 1px solid #f0f0f2; }
+#transactions-list li { display: flex; justify-content: space-between; align-items: center; padding: 10px 6px; border-bottom: 1px solid #f0f2f6; }
 .tx-left { display:flex; gap:12px; align-items:center; }
-.tx-desc { font-weight:600; }
-.tx-meta { color:#666; font-size:12px; }
+.tx-desc { font-weight:700; }
+.tx-meta { color:var(--muted); font-size:12px; display:flex; align-items:center; gap:8px; }
+.category-badge { display:inline-block; width:12px; height:12px; border-radius:50%; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
 .tx-amount { font-weight:700; }
-.tx-amount.income { color: #127a2a; }
-.tx-amount.expense { color: #c62828; }
-.tx-actions button { background: transparent; border: none; color: #888; cursor: pointer; }
+.tx-amount.income { color: var(--income); }
+.tx-amount.expense { color: var(--expense); }
+.tx-actions button { background: transparent; border: none; color: #8b8f98; cursor: pointer; }
 
 /* Responsive */
 @media (max-width: 640px) {
