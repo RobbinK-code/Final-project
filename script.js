@@ -27,6 +27,7 @@ try {
   transactions = [];
   monthlyIncome = 0;
   monthlyDues = [];
+}
 
 // Render transactions and totals
 function render() {
@@ -143,6 +144,7 @@ function save() {
     localStorage.setItem('monthlyIncome', monthlyIncome.toString());
     localStorage.setItem('monthlyDues', JSON.stringify(monthlyDues));
   } catch (e) { /* ignore */ }
+}
 
 // Format currency display consistently
 function formatCurrency(num) {
