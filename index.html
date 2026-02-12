@@ -29,6 +29,32 @@
         </div>
       </section>
 
+      <!-- Monthly Income Section -->
+      <section class="monthly-section">
+        <h2>Monthly Income</h2>
+        <div class="income-input-group">
+          <input type="number" id="monthly-income" placeholder="Enter monthly income (e.g. 3000.00)" step="0.01" />
+          <button id="set-income-btn">Set Income</button>
+          <p id="monthly-income-display">Monthly Income: $0.00</p>
+        </div>
+      </section>
+
+      <!-- Monthly Dues Section -->
+      <section class="monthly-section">
+        <h2>Monthly Dues</h2>
+        <div class="dues-input-group">
+          <input type="text" id="due-name" placeholder="Due name (e.g. Rent, Insurance)" />
+          <input type="number" id="due-amount" placeholder="Amount (e.g. 1200.00)" step="0.01" />
+          <button id="add-due-btn">Add Due</button>
+        </div>
+        <p class="error" id="due-error-msg" aria-live="polite"></p>
+        <ul id="dues-list"></ul>
+        <div class="dues-summary">
+          <p>Total Dues: <strong id="total-dues">$0.00</strong></p>
+          <p>Remaining after Dues: <strong id="remaining-after-dues">$0.00</strong></p>
+        </div>
+      </section>
+
       <!-- Form to add transactions -->
       <section class="form-section">
         <form id="transaction-form">

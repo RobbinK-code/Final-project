@@ -11,15 +11,22 @@ const totalExpensesEl = document.getElementById('total-expenses');
 const errorMsg = document.getElementById('error-msg');
 
 let transactions = [];
+let monthlyIncome = 0;
+let monthlyDues = [];
 
-// Load saved transactions if available. Using try/catch to avoid errors when
+// Load saved data if available. Using try/catch to avoid errors when
 // localStorage is disabled (some privacy modes disable it).
 try {
-	const saved = localStorage.getItem('transactions');
-	if (saved) transactions = JSON.parse(saved);
+  const saved = localStorage.getItem('transactions');
+  if (saved) transactions = JSON.parse(saved);
+  const savedIncome = localStorage.getItem('monthlyIncome');
+  if (savedIncome) monthlyIncome = parseFloat(savedIncome);
+  const savedDues = localStorage.getItem('monthlyDues');
+  if (savedDues) monthlyDues = JSON.parse(savedDues);
 } catch (e) {
-	transactions = [];
-}
+  transactions = [];
+  monthlyIncome = 0;
+  monthlyDues = [];
 
 // Render transactions and totals
 function render() {
