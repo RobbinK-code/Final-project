@@ -5,7 +5,7 @@ A personal finance tool designed to help users track monthly income and expenses
 **Technologies Used:**
 - HTML
 - CSS
-- JavaScript (vanilla)
+- JavaScript
 
 **How it works:**
 - Add transactions with a description, amount, category and type (Income or Expense).
@@ -30,6 +30,3 @@ To clear all saved transactions locally, open the browser DevTools Console and r
 localStorage.removeItem('transactions');
 ```
 
-**Notes for the repository owner:**
-- Add the following short summary to the repository About section on GitHub:
-  "A personal finance tool designed to help users track monthly income and expenses to improve financial literacy."
