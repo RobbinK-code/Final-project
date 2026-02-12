@@ -1,4 +1,4 @@
-// Basic transaction logic: store transactions in memory (and localStorage when supported)
+// Transaction logic with validation and helpful messages
 const form = document.getElementById('transaction-form');
 const descInput = document.getElementById('description');
 const amountInput = document.getElementById('amount');
@@ -12,12 +12,12 @@ const errorMsg = document.getElementById('error-msg');
 
 let transactions = [];
 
-// Load saved transactions if available
+// Load saved transactions if available. Using try/catch to avoid errors when
+// localStorage is disabled (some privacy modes disable it).
 try {
 	const saved = localStorage.getItem('transactions');
 	if (saved) transactions = JSON.parse(saved);
 } catch (e) {
-	// localStorage might be unavailable in some environments
 	transactions = [];
 }
 
@@ -25,17 +25,17 @@ try {
 function render() {
 	transactionsList.innerHTML = '';
 
-	// Calculate totals: incomes are positive, expenses negative
+	// Function to calculate totals.
+	// Total is the sum of signed amounts: incomes positive, expenses negative.
 	const total = transactions.reduce((s, t) => s + t.amount, 0);
 	const income = transactions.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0);
 	const expenses = transactions.filter(t => t.amount < 0).reduce((s, t) => s + t.amount, 0);
 
-	// Update dashboard values
 	totalBalanceEl.textContent = formatCurrency(total);
 	totalIncomeEl.textContent = formatCurrency(income);
 	totalExpensesEl.textContent = formatCurrency(Math.abs(expenses));
 
-	// Render each transaction
+	// Render each transaction with category and delete action
 	transactions.forEach(tx => {
 		const li = document.createElement('li');
 		const left = document.createElement('div');
@@ -62,13 +62,36 @@ function render() {
 	});
 }
 
-// Add a new transaction (basic: no strict validation yet)
+// Validate input fields before adding a transaction
+function validateInput(description, rawAmount, category) {
+	// Required fields: description and category
+	if (!description || !category) {
+		// Required fields missing: show an alert per requirement
+		alert('All fields are required to track your finances accurately');
+		return false;
+	}
+
+	// Amount must be a number and strictly positive
+	if (isNaN(rawAmount) || rawAmount <= 0) {
+		errorMsg.textContent = 'Please enter a valid positive amount';
+		return false;
+	}
+
+	// Clear previous error if validation passes
+	errorMsg.textContent = '';
+	return true;
+}
+
+// Add a new transaction with validation and feedback
 function addTransaction(e) {
 	e.preventDefault();
 	const description = descInput.value.trim();
 	const rawAmount = parseFloat(amountInput.value);
 	const category = categoryInput.value;
 	const type = typeInput.value;
+
+	// Validate inputs; shows either alert or inline message
+	if (!validateInput(description, rawAmount, category)) return;
 
 	// Convert to signed amount (expenses stored as negative values)
 	const amount = type === 'expense' ? -Math.abs(rawAmount) : Math.abs(rawAmount);
@@ -90,11 +113,12 @@ function save() {
 	try { localStorage.setItem('transactions', JSON.stringify(transactions)); } catch (e) { /* ignore */ }
 }
 
+// Format currency display consistently
 function formatCurrency(num) {
 	return (num >= 0 ? '$' + num.toFixed(2) : '-$' + Math.abs(num).toFixed(2));
 }
 
-// Simple HTML escape to prevent injection when rendering descriptions
+// Escape HTML when rendering user-provided text to avoid injection
 function escapeHtml(s) {
 	return String(s).replace(/[&"'<>]/g, c => ({'&':'&amp;','"':'&quot;','\'':'&#39;','<':'&lt;','>':'&gt;'}[c]));
 }
