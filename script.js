@@ -138,8 +138,11 @@ function removeTransaction(id) {
 }
 
 function save() {
-	try { localStorage.setItem('transactions', JSON.stringify(transactions)); } catch (e) { /* ignore */ }
-}
+  try { 
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+    localStorage.setItem('monthlyIncome', monthlyIncome.toString());
+    localStorage.setItem('monthlyDues', JSON.stringify(monthlyDues));
+  } catch (e) { /* ignore */ }
 
 // Format currency display consistently
 function formatCurrency(num) {
@@ -153,6 +156,90 @@ function escapeHtml(s) {
 
 form.addEventListener('submit', addTransaction);
 
+// Event listeners for monthly income
+document.getElementById('set-income-btn').addEventListener('click', () => {
+  const rawIncome = parseFloat(document.getElementById('monthly-income').value);
+  if (isNaN(rawIncome) || rawIncome < 0) {
+    alert('Please enter a valid non-negative monthly income');
+    return;
+  }
+  monthlyIncome = rawIncome;
+  save();
+  renderMonthlyIncome();
+  render();
+});
+
+// Event listeners for monthly dues
+document.getElementById('add-due-btn').addEventListener('click', () => {
+  const dueName = document.getElementById('due-name').value.trim();
+  const dueAmount = parseFloat(document.getElementById('due-amount').value);
+  const dueErrorMsg = document.getElementById('due-error-msg');
+
+  // Validate input
+  if (!dueName || isNaN(dueAmount) || dueAmount <= 0) {
+    dueErrorMsg.textContent = 'Please enter a valid due name and positive amount';
+    return;
+  }
+
+  dueErrorMsg.textContent = '';
+  const due = { id: Date.now(), name: dueName, amount: dueAmount };
+  monthlyDues.push(due);
+  save();
+  renderMonthlyDues();
+  render();
+  document.getElementById('due-name').value = '';
+  document.getElementById('due-amount').value = '';
+});
+
+// Render monthly income section
+function renderMonthlyIncome() {
+  document.getElementById('monthly-income-display').textContent = `Monthly Income: ${formatCurrency(monthlyIncome)}`;
+}
+
+// Render monthly dues list and summary
+function renderMonthlyDues() {
+  const duesList = document.getElementById('dues-list');
+  duesList.innerHTML = '';
+
+  // Calculate total dues
+  const totalDues = monthlyDues.reduce((sum, due) => sum + due.amount, 0);
+  const remainingAfterDues = monthlyIncome - totalDues;
+
+  // Render each due
+  monthlyDues.forEach(due => {
+    const li = document.createElement('li');
+    const nameEl = document.createElement('div');
+    nameEl.className = 'due-name';
+    nameEl.textContent = escapeHtml(due.name);
+
+    const amountEl = document.createElement('div');
+    amountEl.className = 'due-amount';
+    amountEl.textContent = formatCurrency(due.amount);
+
+    const actionsEl = document.createElement('div');
+    actionsEl.className = 'due-actions';
+    const delBtn = document.createElement('button');
+    delBtn.textContent = 'Delete';
+    delBtn.addEventListener('click', () => {
+      monthlyDues = monthlyDues.filter(d => d.id !== due.id);
+      save();
+      renderMonthlyDues();
+      render();
+    });
+    actionsEl.appendChild(delBtn);
+
+    li.appendChild(nameEl);
+    li.appendChild(amountEl);
+    li.appendChild(actionsEl);
+    duesList.appendChild(li);
+  });
+
+  // Update summary
+  document.getElementById('total-dues').textContent = formatCurrency(totalDues);
+  document.getElementById('remaining-after-dues').textContent = formatCurrency(remainingAfterDues);
+}
+
 // Initial render
 render();
-
+renderMonthlyIncome();
+renderMonthlyDues();
