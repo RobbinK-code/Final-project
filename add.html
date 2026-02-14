@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personal Finance Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+    <body>
+        <div class="container">
+        <header>
+            <h1>Personal Finance Tracker</h1>
+            <p class="tagline">Track your income and expenses with categories and quick summaries.</p>
+            <nav>
+            <a href="index.html">Dashboard</a>
+            <a href="add.html">Add Transaction</a>
+            <a href="history.html">History</a>
+            </nav>
+        </header>
+    
+        <!-- Add Transaction Form -->
+        <section class="add-transaction-section">
+            <h2>Add New Transaction</h2>
+            <form id="add-transaction-form">
+            <div class="form-group">
+                <label for="transaction-date">Date:</label>
+                <input type="date" id="transaction-date" required />
+            </div>
+            <div class="form-group">
+                <label for="transaction-description">Description:</label>
+                <input type="text" id="transaction-description" placeholder="e.g. Salary, Groceries" required />
+            </div>
+            <div class="form-group">
+                <label for="transaction-amount">Amount:</label>
+                <input type="number" id="transaction-amount" placeholder="e.g. 1500.00" step="0.01" required />
+            </div>
+            <div class="form-group">
+                <label for="transaction-category">Category:</label>
+                <select id="transaction-category" required>
+                <option value="">Select category</option>
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
+                </select>
+            </div>
+            <button type="submit">Add Transaction</button>
+            </form>
+            <p class="error" id="add-transaction-error-msg" aria-live="polite"></p>
+        </section>
+    
+        </div>
+    
+        <script src="add.js"></script>
+    
+    </body>
+
+
+
+
