@@ -79,3 +79,13 @@ header h1 { margin-bottom: 6px; }
   .dashboard { flex-direction: column; }
   #transaction-form { flex-direction: column; align-items: stretch; }
 }
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+nav {
+  display: flex;
+  flex-direction: column;
+}
+}

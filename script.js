@@ -1,5 +1,4 @@
 // Transaction logic with validation and helpful messages
-const form = document.getElementById('transaction-form');
 const descInput = document.getElementById('description');
 const amountInput = document.getElementById('amount');
 const categoryInput = document.getElementById('category');
@@ -9,6 +8,20 @@ const totalBalanceEl = document.getElementById('total-balance');
 const totalIncomeEl = document.getElementById('total-income');
 const totalExpensesEl = document.getElementById('total-expenses');
 const errorMsg = document.getElementById('error-msg');
+
+const form = document.getElementById("form");
+if (form) {
+  form.addEventListener('submit', addTransaction);
+}
+if (description.trim() === ""|| amount === "") {
+	alert("Please fill in all fields");
+	return;
+}
+
+const transactionList = document.getElementById('transaction-list');
+if (transactionList) {
+	loadTransactions();
+}
 
 let transactions = [];
 let monthlyIncome = 0;
