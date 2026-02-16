@@ -1,42 +1,42 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Personal Finance Tracker</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-    <body>
-        <div class="container">
-        <header>
-            <h1>Personal Finance Tracker</h1>
-            <p class="tagline">Track your income and expenses with categories and quick summaries.</p>
-            <nav>
-            <a href="index.html">Dashboard</a>
-            <a href="add.html">Add Transaction</a>
-            <a href="history.html">History</a>
-            </nav>
-        </header>
-    
-        <!-- History Section -->
-         <ul id="transaction-list"></ul>
-        <section class="history-section">
-            <h2>Transaction History</h2>
-            <table id="transaction-history-table">
-            <thead>
-                <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Category</th>
-                </tr>
-            </thead>
-            <tbody id="transaction-history-body">
-                <!-- Transactions will be dynamically added here -->
-            </tbody>
-            </table>
-        </section>
-    
-        </div>
-    
-        <script src="history.js"></script>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Finance Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Personal Finance Tracker</h1>
+      <p class="tagline">Track your income and expenses with categories and quick summaries.</p>
+      <nav>
+        <a href="index.html">Dashboard</a>
+        <a href="add.html">Add Transaction</a>
+        <a href="history.html">History</a>
+      </nav>
+    </header>
+
+    <section class="history-section">
+      <h2>Transaction History</h2>
+      <table id="transaction-history-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody id="transaction-history-body">
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
